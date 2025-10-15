@@ -12,6 +12,10 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+    <string>Vocal Memo needs speech recognition to transcribe your recordings</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Vocal Memo needs microphone access to record audio</string>
 	<key>CFBundleName</key>
 	<string>vocal_memo</string>
 	<key>CFBundlePackageType</key>
