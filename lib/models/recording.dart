@@ -14,6 +14,8 @@ class Recording {
   final String? folderId;
   String? transcript;
   bool isTranscribing;
+  List<double>? waveformData = [];
+
 
   Recording({
     required this.id,
@@ -28,6 +30,7 @@ class Recording {
     this.folderId,
     this.transcript,
     this.isTranscribing = false,
+    this.waveformData,
   });
 
   String get displayTitle => title ?? 'Memo ${DateFormat('MMM d, h:mm a').format(createdAt)}';
@@ -55,6 +58,7 @@ class Recording {
     'folderId': folderId,
     'transcript': transcript,
     'isTranscribing': isTranscribing,
+    'waveformData': waveformData,
   };
 
   factory Recording.fromJson(Map<String, dynamic> json) => Recording(
@@ -70,6 +74,7 @@ class Recording {
     folderId: json['folderId'] as String?,
     transcript: json['transcript'] as String?,
     isTranscribing: json['isTranscribing'] as bool? ?? false,
+    waveformData: List<double>.from(json['waveformData'] as List? ?? []),
   );
 
   Recording copyWith({
@@ -85,6 +90,7 @@ class Recording {
     String? folderId,
     String? transcript,
     bool? isTranscribing,
+    List<double>? waveformData,
   }) =>
       Recording(
         id: id ?? this.id,
@@ -99,5 +105,6 @@ class Recording {
         folderId: folderId ?? this.folderId,
         transcript: transcript ?? this.transcript,
         isTranscribing: isTranscribing ?? this.isTranscribing,
+        waveformData: waveformData,
       );
 }

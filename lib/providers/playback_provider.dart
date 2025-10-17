@@ -20,7 +20,14 @@ class PlaybackNotifier extends StateNotifier<PlaybackState> {
 
   void _initializeListeners() {
     _playbackService.onPlayerStateChanged.listen((playerState) {
-      state = state.copyWith(playerState: playerState);
+      if (playerState == PlayerState.completed) {
+        state = state.copyWith(
+          playerState: PlayerState.stopped,
+          position: state.duration,
+        );
+      } else {
+        state = state.copyWith(playerState: playerState);
+      }
     });
 
     _playbackService.onDurationChanged.listen((duration) {
@@ -32,7 +39,7 @@ class PlaybackNotifier extends StateNotifier<PlaybackState> {
     });
   }
 
-  Future<void> loadAndPlay(String filePath) async {
+  Future<void> load(String filePath) async {
     try {
       state = state.copyWith(isLoading: true);
       final duration = await _playbackService.load(filePath);
@@ -41,7 +48,6 @@ class PlaybackNotifier extends StateNotifier<PlaybackState> {
         duration: duration ?? Duration.zero,
         isLoading: false,
       );
-      await _playbackService.play();
     } catch (e) {
       print('Error loading and playing: $e');
       state = state.copyWith(isLoading: false);
@@ -82,11 +88,11 @@ class PlaybackNotifier extends StateNotifier<PlaybackState> {
   }
 
   Future<void> skipForward() async {
-    await _playbackService.skipForward(const Duration(seconds: 15));
+    await _playbackService.skipForward(const Duration(seconds: 10));
   }
 
   Future<void> skipBackward() async {
-    await _playbackService.skipBackward(const Duration(seconds: 15));
+    await _playbackService.skipBackward(const Duration(seconds: 10));
   }
 
   void reset() {

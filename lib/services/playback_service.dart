@@ -29,7 +29,17 @@ class PlaybackService {
 
   Future<void> play() async {
     try {
-      await _audioPlayer.resume();
+      // If player has finished or is stopped, start from the beginning
+      if (_audioPlayer.state == PlayerState.stopped ||
+          _audioPlayer.state == PlayerState.completed) {
+        if (_currentFilePath != null) {
+          await _audioPlayer.play(DeviceFileSource(_currentFilePath!));
+        } else {
+          print('No file loaded to play.');
+        }
+      } else {
+        await _audioPlayer.resume();
+      }
     } catch (e) {
       print('Error playing audio: $e');
     }

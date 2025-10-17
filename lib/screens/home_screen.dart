@@ -5,8 +5,7 @@ import '../theme/app_theme.dart';
 import '../models/recording.dart';
 import '../providers/recording_provider.dart';
 import 'live_recording_screen.dart';
-import 'recording_details_screen.dart';
-import '../widgets/recording_card.dart';
+import '../widgets/expandable_recording_card.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -43,11 +42,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: const Text('Vocal Memo'),
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => Navigator.pushNamed(context, '/settings'),
+          ),
+          SizedBox(width: 16,)
+        ],
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
             child: SearchBar(
               onChanged: (value) => setState(() => _searchQuery = value),
               hintText: 'Search memos...',
@@ -93,16 +99,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 padding: const EdgeInsets.all(16),
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.only(bottom: 12),
-                  child: RecordingCard(
+                  child: ExpandableRecordingCard(
                     recording: filtered[index],
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RecordingDetailsScreen(
-                          recording: filtered[index],
-                        ),
-                      ),
-                    ),
                   ),
                 ),
               ),

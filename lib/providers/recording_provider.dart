@@ -1,7 +1,9 @@
 // lib/providers/recording_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod/legacy.dart';
-import '../../models/recording.dart';
+import 'package:flutter_riverpod/legacy.dart';
+import 'package:vocal_memo/services/settings_service.dart';
+import '../models/recording.dart';
+import '../models/recording_settings.dart';
 import '../services/audio_service.dart';
 import '../services/storage_service.dart';
 
@@ -15,7 +17,7 @@ class RecordingNotifier extends StateNotifier<List<Recording>> {
   final StorageService _storageService;
   bool _isRecording = false;
 
-  RecordingNotifier(this._audioService, this._storageService) : super([]) {
+  RecordingNotifier(this._audioService, this._storageService,) : super([]) {
     _loadRecordings();
   }
 
@@ -25,8 +27,8 @@ class RecordingNotifier extends StateNotifier<List<Recording>> {
     state = await _storageService.getAllRecordings();
   }
 
-  Future<void> startRecording() async {
-    await _audioService.startRecording();
+  Future<void> startRecording(RecordingSettings settings) async {
+    await _audioService.startRecording(settings);
     _isRecording = true;
   }
 

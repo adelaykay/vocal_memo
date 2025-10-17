@@ -2,7 +2,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import '../models/recording.dart';
 
-class StorageService {
+class  StorageService {
   static const String recordingsBoxName = 'recordings';
   static late Box<Map> _recordingsBox;
 
@@ -21,9 +21,19 @@ class StorageService {
     final recordings = _recordingsBox.values
         .map((json) => Recording.fromJson(Map<String, dynamic>.from(json)))
         .toList();
-    // Sort by date (newest first)
-    recordings.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-    return recordings;
+
+    // Separate pinned and unpinned recordings
+    final pinned = recordings.where((r) => r.isPinned).toList();
+    final unpinned = recordings.where((r) => !r.isPinned).toList();
+
+    // Sort pinned by date (newest first)
+    pinned.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+    // Sort unpinned by date (newest first)
+    unpinned.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+    // Return pinned first, then unpinned
+    return [...pinned, ...unpinned];
   }
 
   // Get recording by ID

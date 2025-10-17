@@ -57,4 +57,58 @@ class AppTheme {
       foregroundColor: Colors.white,
     ),
   );
+
+  static ThemeData darkTheme = ThemeData(
+    useMaterial3: true,
+    colorScheme: const ColorScheme.dark(
+      primary: teal,
+      secondary: orange,
+      surface: Color(0xFF1C1C1C),
+      background: Color(0xFF121212),
+      error: Colors.redAccent,
+    ),
+    scaffoldBackgroundColor: const Color(0xFF121212),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFF1C1C1C),
+      elevation: 0,
+      centerTitle: false,
+      titleTextStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+      ),
+      iconTheme: IconThemeData(color: Colors.white),
+    ),
+    textTheme: const TextTheme(
+      headlineLarge: TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        color: Colors.white70,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        color: Colors.white60,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 12,
+        color: Colors.white54,
+      ),
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: orange,
+      foregroundColor: Colors.white,
+    ),
+    dividerColor: Colors.white10,
+    cardColor: const Color(0xFF1E1E1E),
+    dialogBackgroundColor: const Color(0xFF1E1E1E),
+  );
 }
