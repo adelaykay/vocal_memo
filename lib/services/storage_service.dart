@@ -4,11 +4,14 @@ import '../models/recording.dart';
 
 class  StorageService {
   static const String recordingsBoxName = 'recordings';
+  static const String onboardingBoxName = 'onboarding';
   static late Box<Map> _recordingsBox;
+  static late Box _onboardingBox;
 
   static Future<void> init() async {
     await Hive.initFlutter();
     _recordingsBox = await Hive.openBox<Map>(recordingsBoxName);
+    _onboardingBox = await Hive.openBox(onboardingBoxName);
   }
 
   // Save a recording
@@ -85,5 +88,14 @@ class  StorageService {
   // Clear all recordings
   Future<void> clearAll() async {
     await _recordingsBox.clear();
+  }
+
+  // Onboarding
+  static bool getOnboardingComplete() {
+    return _onboardingBox.get('onboarding_complete', defaultValue: false);
+  }
+
+  static Future<void> setOnboardingComplete(bool value) async {
+    await _onboardingBox.put('onboarding_complete', value);
   }
 }

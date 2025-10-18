@@ -125,8 +125,10 @@ class SettingsScreen extends ConsumerWidget {
             title: const Text("Show Live Waveform"),
             subtitle: const Text("Display real-time waveform during recording"),
             value: settings.showWaveform,
-            onChanged: (v) =>
-                updateSettings(settings.copyWith(showWaveform: v)),
+            inactiveTrackColor: Colors.grey,
+            onChanged: (v) {
+              // updateSettings(settings.copyWith(showWaveform: v));
+            },
           ),
 
           const SizedBox(height: 24),

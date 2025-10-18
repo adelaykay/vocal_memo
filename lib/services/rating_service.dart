@@ -10,7 +10,7 @@ class RatingService {
       } else {
         // Fallback to Play Store page
         await _review.openStoreListing(
-          appStoreId: 'com.empyrealworks.vocalmemo',
+          appStoreId: 'com.empyrealworks.vocal_memo',
         );
       }
     } catch (e) {

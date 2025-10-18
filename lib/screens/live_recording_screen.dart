@@ -198,6 +198,7 @@ class _LiveRecordingScreenState extends ConsumerState<LiveRecordingScreen> {
                       FloatingActionButton(
                         mini: true,
                         backgroundColor: AppTheme.lightGray,
+                        foregroundColor: AppTheme.orange,
                         onPressed: !_isRecording
                             ? null
                             : _isPaused

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocal Memo Screenshot Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1a1a1a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #6CD6CE;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .device-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .device-tab {
+            padding: 12px 30px;
+            background: #2a2a2a;
+            color: #999;
+            border: 2px solid #3a3a3a;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .device-tab.active {
+            background: #6CD6CE;
+            color: white;
+            border-color: #6CD6CE;
+        }
+
+        .device-tab:hover {
+            border-color: #6CD6CE;
+        }
+
+        .device-section {
+            display: none;
+        }
+
+        .device-section.active {
+            display: block;
+        }
+
+        .section-title {
+            color: #F86E01;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .template-card {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #3a3a3a;
+        }
+
+        .template-card h2 {
+            color: #F86E01;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .upload-section {
+            margin-bottom: 15px;
+        }
+
+        .upload-section label {
+            color: #6CD6CE;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 14px;
+        }
+
+        .upload-section input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            border-radius: 6px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .upload-section input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .canvas-wrapper {
+            margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .download-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            background: #6CD6CE;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #5ac5bd;
+            transform: translateY(-2px);
+        }
+
+        .download-btn:disabled {
+            background: #444;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .info {
+            color: #666;
+            margin-top: 10px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .instructions {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #6CD6CE;
+        }
+
+        .instructions h3 {
+            color: #6CD6CE;
+            margin-bottom: 10px;
+        }
+
+        .instructions p {
+            color: #999;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vocal Memo - Play Store Screenshots</h1>
+        
+        <div class="device-tabs">
+            <button class="device-tab active" onclick="switchDevice('phone')">📱 Phone</button>
+            <button class="device-tab" onclick="switchDevice('tablet7')">📱 7" Tablet</button>
+            <button class="device-tab" onclick="switchDevice('tablet10')">📱 10" Tablet</button>
+        </div>
+
+        <div class="instructions">
+            <h3>📱 Instructions</h3>
+            <p>1. Select device type (Phone, 7" Tablet, or 10" Tablet)</p>
+            <p>2. Upload your app screenshots (PNG/JPEG)</p>
+            <p>3. Customize the headline text for each screenshot</p>
+            <p>4. Download each screenshot</p>
+            <p>5. Upload to Google Play Console</p>
+        </div>
+
+        <!-- Phone Screenshots -->
+        <div id="phone-section" class="device-section active">
+            <h2 class="section-title">📱 Phone Screenshots (1080×1920px)</h2>
+            <div class="templates-grid" id="phone-grid"></div>
+        </div>
+
+        <!-- 7" Tablet Screenshots -->
+        <div id="tablet7-section" class="device-section">
+            <h2 class="section-title">📱 7" Tablet Screenshots (1920×1080px)</h2>
+            <div class="templates-grid" id="tablet7-grid"></div>
+        </div>
+
+        <!-- 10" Tablet Screenshots -->
+        <div id="tablet10-section" class="device-section">
+            <h2 class="section-title">📱 10" Tablet Screenshots (2560×1440px)</h2>
+            <div class="templates-grid" id="tablet10-grid"></div>
+        </div>
+    </div>
+
+    <script>
+        const screenshots = {
+            phone: { 1: null, 2: null, 3: null },
+            tablet7: { 1: null, 2: null, 3: null },
+            tablet10: { 1: null, 2: null, 3: null }
+        };
+
+        const deviceSpecs = {
+            phone: { width: 1080, height: 1920, orientation: 'portrait' },
+            tablet7: { width: 1920, height: 1080, orientation: 'landscape' },
+            tablet10: { width: 2560, height: 1440, orientation: 'landscape' }
+        };
+
+        const screenshotData = [
+            {
+                title: 'Live Recording',
+                headline: 'Record with Crystal Clarity',
+                subtext: 'Live waveform visualization as you speak'
+            },
+            {
+                title: 'Playback',
+                headline: 'Organize & Play with Ease',
+                subtext: 'Favorites, pins, and powerful playback controls'
+            },
+            {
+                title: 'Settings',
+                headline: 'Full Control Over Your Recordings',
+                subtext: 'Customize sample rate, format, and audio quality'
+            }
+        ];
+
+        const teal = '#6CD6CE';
+        const orange = '#F86E01';
+
+        function switchDevice(deviceType) {
+            // Update tabs
+            document.querySelectorAll('.device-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update sections
+            document.querySelectorAll('.device-section').forEach(section => section.classList.remove('active'));
+            document.getElementById(`${deviceType}-section`).classList.add('active');
+        }
+
+        function createTemplateCard(deviceType, num, data) {
+            return `
+                <div class="template-card">
+                    <h2>Screenshot ${num}: ${data.title}</h2>
+                    <div class="upload-section">
+                        <label for="${deviceType}-screenshot${num}">Upload Screenshot</label>
+                        <input type="file" id="${deviceType}-screenshot${num}" accept="image/*" 
+                               onchange="handleScreenshotUpload('${deviceType}', ${num}, event)">
+                    </div>
+                    <div class="upload-section">
+                        <label for="${deviceType}-headline${num}">Headline Text</label>
+                        <input type="text" id="${deviceType}-headline${num}" value="${data.headline}" 
+                               oninput="updateScreenshot('${deviceType}', ${num})" placeholder="Enter headline...">
+                    </div>
+                    <div class="upload-section">
+                        <label for="${deviceType}-subtext${num}">Subtext (optional)</label>
+                        <input type="text" id="${deviceType}-subtext${num}" value="${data.subtext}" 
+                               oninput="updateScreenshot('${deviceType}', ${num})" placeholder="Enter subtext...">
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="${deviceType}-canvas${num}" 
+                                width="${deviceSpecs[deviceType].width}" 
+                                height="${deviceSpecs[deviceType].height}"></canvas>
+                    </div>
+                    <button class="download-btn" id="${deviceType}-download${num}" 
+                            onclick="downloadScreenshot('${deviceType}', ${num})" disabled>
+                        Upload Screenshot First
+                    </button>
+                    <p class="info">${deviceSpecs[deviceType].width}×${deviceSpecs[deviceType].height}px</p>
+                </div>
+            `;
+        }
+
+        // Initialize all grids
+        function initializeGrids() {
+            ['phone', 'tablet7', 'tablet10'].forEach(deviceType => {
+                const grid = document.getElementById(`${deviceType}-grid`);
+                let html = '';
+                screenshotData.forEach((data, index) => {
+                    html += createTemplateCard(deviceType, index + 1, data);
+                });
+                grid.innerHTML = html;
+            });
+        }
+
+        function handleScreenshotUpload(deviceType, num, event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        screenshots[deviceType][num] = img;
+                        updateScreenshot(deviceType, num);
+                        document.getElementById(`${deviceType}-download${num}`).disabled = false;
+                        document.getElementById(`${deviceType}-download${num}`).textContent = 'Download Screenshot';
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function updateScreenshot(deviceType, num) {
+            const canvas = document.getElementById(`${deviceType}-canvas${num}`);
+            const ctx = canvas.getContext('2d');
+            const screenshot = screenshots[deviceType][num];
+            const specs = deviceSpecs[deviceType];
+
+            if (!screenshot) return;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, specs.width, specs.height);
+
+            // Fill background with gradient
+            const bgGradient = ctx.createLinearGradient(0, 0, 0, specs.height);
+            bgGradient.addColorStop(0, '#0a0a0a');
+            bgGradient.addColorStop(1, '#1a1a1a');
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, specs.width, specs.height);
+
+            if (specs.orientation === 'portrait') {
+                drawPortraitLayout(ctx, screenshot, deviceType, num, specs);
+            } else {
+                drawLandscapeLayout(ctx, screenshot, deviceType, num, specs);
+            }
+        }
+
+        function drawPortraitLayout(ctx, screenshot, deviceType, num, specs) {
+            // Calculate screenshot dimensions
+            const screenshotHeight = specs.height * 0.72;
+            const screenshotWidth = (screenshot.width / screenshot.height) * screenshotHeight;
+            const screenshotX = (specs.width - screenshotWidth) / 2;
+            const screenshotY = specs.height * 0.13;
+
+            // Add glow effect
+            ctx.shadowColor = teal;
+            ctx.shadowBlur = 40;
+            ctx.fillStyle = '#fff';
+            roundRect(ctx, screenshotX - 10, screenshotY - 10, screenshotWidth + 20, screenshotHeight + 20, 20);
+            ctx.fill();
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+
+            // Draw screenshot
+            ctx.save();
+            roundRect(ctx, screenshotX, screenshotY, screenshotWidth, screenshotHeight, 15);
+            ctx.clip();
+            ctx.drawImage(screenshot, screenshotX, screenshotY, screenshotWidth, screenshotHeight);
+            ctx.restore();
+
+            // Draw headline
+            const headline = document.getElementById(`${deviceType}-headline${num}`).value;
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 56px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.textAlign = 'center';
+            wrapText(ctx, headline, specs.width / 2, specs.height * 0.06, specs.width * 0.9, 65);
+
+            // Draw subtext
+            const subtext = document.getElementById(`${deviceType}-subtext${num}`).value;
+            if (subtext) {
+                ctx.fillStyle = teal;
+                ctx.font = '36px -apple-system, BlinkMacSystemFont, sans-serif';
+                wrapText(ctx, subtext, specs.width / 2, specs.height * 0.91, specs.width * 0.9, 45);
+            }
+
+            // Decorative elements
+            addDecorativeElements(ctx, specs);
+        }
+
+        function drawLandscapeLayout(ctx, screenshot, deviceType, num, specs) {
+            // Calculate screenshot dimensions (left half)
+            const screenshotWidth = specs.width * 0.45;
+            const screenshotHeight = (screenshot.height / screenshot.width) * screenshotWidth;
+            const screenshotX = specs.width * 0.05;
+            const screenshotY = (specs.height - screenshotHeight) / 2;
+
+            // Add glow effect
+            ctx.shadowColor = teal;
+            ctx.shadowBlur = 40;
+            ctx.fillStyle = '#fff';
+            roundRect(ctx, screenshotX - 10, screenshotY - 10, screenshotWidth + 20, screenshotHeight + 20, 20);
+            ctx.fill();
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+
+            // Draw screenshot
+            ctx.save();
+            roundRect(ctx, screenshotX, screenshotY, screenshotWidth, screenshotHeight, 15);
+            ctx.clip();
+            ctx.drawImage(screenshot, screenshotX, screenshotY, screenshotWidth, screenshotHeight);
+            ctx.restore();
+
+            // Text on right side
+            const textX = specs.width * 0.55;
+            const textCenterX = (specs.width * 0.55 + specs.width * 0.95) / 2;
+            
+            // Draw headline
+            const headline = document.getElementById(`${deviceType}-headline${num}`).value;
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `bold ${specs.width * 0.035}px -apple-system, BlinkMacSystemFont, sans-serif`;
+            ctx.textAlign = 'center';
+            wrapText(ctx, headline, textCenterX, specs.height * 0.35, specs.width * 0.38, specs.width * 0.04);
+
+            // Draw subtext
+            const subtext = document.getElementById(`${deviceType}-subtext${num}`).value;
+            if (subtext) {
+                ctx.fillStyle = teal;
+                ctx.font = `${specs.width * 0.02}px -apple-system, BlinkMacSystemFont, sans-serif`;
+                wrapText(ctx, subtext, textCenterX, specs.height * 0.55, specs.width * 0.38, specs.width * 0.025);
+            }
+
+            // Decorative elements
+            addDecorativeElements(ctx, specs);
+        }
+
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+
+            for (let i = 0; i < words.length; i++) {
+                const testLine = line + words[i] + ' ';
+                const metrics = ctx.measureText(testLine);
+                if (metrics.width > maxWidth && i > 0) {
+                    ctx.fillText(line, x, currentY);
+                    line = words[i] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, currentY);
+        }
+
+        function addDecorativeElements(ctx, specs) {
+            ctx.globalAlpha = 0.1;
+            ctx.fillStyle = orange;
+            ctx.beginPath();
+            ctx.arc(specs.width * 0.9, specs.height * 0.9, specs.width * 0.05, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = teal;
+            ctx.beginPath();
+            ctx.arc(specs.width * 0.1, specs.height * 0.1, specs.width * 0.04, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function downloadScreenshot(deviceType, num) {
+            const canvas = document.getElementById(`${deviceType}-canvas${num}`);
+            const link = document.createElement('a');
+            link.download = `vocal-memo-${deviceType}-screenshot-${num}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Initialize on load
+        initializeGrids();
+    </script>
+</body>
+</html>

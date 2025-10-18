@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocal Memo Feature Graphic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1a1a1a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .upload-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 8px;
+        }
+
+        .upload-section label {
+            color: #6CD6CE;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .upload-section input[type="file"] {
+            color: #999;
+            padding: 10px;
+        }
+
+        .canvas-wrapper {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .download-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: #6CD6CE;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #5ac5bd;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 214, 206, 0.4);
+        }
+
+        .info {
+            color: #999;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="upload-section">
+            <label for="logoUpload">Upload Your Logo (PNG)</label>
+            <input type="file" id="logoUpload" accept="image/png" onchange="handleLogoUpload(event)">
+        </div>
+        <div class="canvas-wrapper">
+            <canvas id="featureGraphic" width="1024" height="500"></canvas>
+        </div>
+        <button class="download-btn" onclick="downloadImage()">Download Feature Graphic</button>
+        <p class="info">1024×500px • Ready for Google Play Store</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('featureGraphic');
+        const ctx = canvas.getContext('2d');
+        let logoImage = null;
+
+        // Colors
+        const teal = '#6CD6CE';
+        const orange = '#F86E01';
+        const darkBg = '#0a0a0a';
+        const lightBg = '#1a1a1a';
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        logoImage = img;
+                        drawFeatureGraphic();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function drawFeatureGraphic() {
+            // Clear canvas
+            ctx.clearRect(0, 0, 1024, 500);
+
+        // Draw background with gradient
+        const bgGradient = ctx.createLinearGradient(0, 0, 1024, 500);
+        bgGradient.addColorStop(0, darkBg);
+        bgGradient.addColorStop(1, lightBg);
+        ctx.fillStyle = bgGradient;
+        ctx.fillRect(0, 0, 1024, 500);
+
+        // Draw decorative circles
+        ctx.globalAlpha = 0.05;
+        ctx.fillStyle = teal;
+        ctx.beginPath();
+        ctx.arc(900, 100, 200, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.fillStyle = orange;
+        ctx.beginPath();
+        ctx.arc(150, 400, 150, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        // Draw animated waveform bars on left
+        const drawWaveform = () => {
+            const barCount = 15;
+            const barWidth = 4;
+            const spacing = 8;
+            const startX = 60;
+            const centerY = 250;
+
+            for (let i = 0; i < barCount; i++) {
+                const x = startX + i * (barWidth + spacing);
+                const heightFactor = (Math.sin(i * 0.5) + 1) / 2;
+                const height = 80 + heightFactor * 120;
+                
+                const gradient = ctx.createLinearGradient(x, centerY - height/2, x, centerY + height/2);
+                gradient.addColorStop(0, orange);
+                gradient.addColorStop(1, teal);
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.roundRect(x, centerY - height/2, barWidth, height, 2);
+                ctx.fill();
+            }
+        };
+
+        drawWaveform();
+
+        // Draw logo if uploaded
+        if (logoImage) {
+            const logoSize = 150;
+            const logoX = 220;
+            const logoY = 100;
+            ctx.drawImage(logoImage, logoX, logoY, logoSize, logoSize);
+        }
+
+        // Draw main text
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 72px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.fillText('Vocal Memo', 380, 200);
+
+        // Draw tagline
+        ctx.fillStyle = teal;
+        ctx.font = '32px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.fillText('Your Pocket Note Taker', 380, 250);
+
+        // Draw feature highlights
+        const features = [
+            { icon: '🎙️', text: 'Crystal-clear recording' },
+            { icon: '🔒', text: 'Private & local' },
+            { icon: '⚙️', text: 'Full control' }
+        ];
+
+        ctx.font = '22px -apple-system, BlinkMacSystemFont, sans-serif';
+        features.forEach((feature, i) => {
+            const y = 310 + i * 40;
+            
+            // Feature text
+            ctx.fillStyle = '#cccccc';
+            ctx.fillText(feature.icon + '  ' + feature.text, 380, y);
+        });
+
+        // Draw decorative waveform on right
+        const drawDecorativeWave = () => {
+            ctx.strokeStyle = teal;
+            ctx.lineWidth = 2;
+            ctx.globalAlpha = 0.3;
+            
+            ctx.beginPath();
+            for (let x = 750; x < 980; x += 5) {
+                const y = 250 + Math.sin((x - 750) * 0.05) * 30;
+                if (x === 750) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+        };
+
+        drawDecorativeWave();
+
+        // Add subtle dots pattern
+        ctx.fillStyle = 'rgba(108, 214, 206, 0.1)';
+        for (let i = 0; i < 50; i++) {
+            const x = Math.random() * 1024;
+            const y = Math.random() * 500;
+            const size = Math.random() * 2 + 1;
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'vocal-memo-feature-graphic-1024x500.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Initial draw
+        drawFeatureGraphic();
+    </script>
+</body>
+</html>
