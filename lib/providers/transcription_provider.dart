@@ -1,6 +1,6 @@
 // lib/providers/transcription_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod/legacy.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../services/transcription_service.dart';
 import '../models/recording.dart';
 import 'recording_provider.dart';
@@ -88,7 +88,7 @@ class FileTranscriptionNotifier extends StateNotifier<AsyncValue<String>> {
     try {
       state = const AsyncValue.loading();
       final transcript = await _transcriptionService.transcribeFile(_filePath);
-      state = AsyncValue.data(transcript);
+      state = AsyncValue.data(transcript!);
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
     }

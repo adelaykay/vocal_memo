@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:io';
+import '../providers/transcription_provider.dart';
+import '../screens/trim_screen.dart';
 import '../theme/app_theme.dart';
 import '../models/recording.dart';
 import '../providers/recording_provider.dart';
@@ -98,7 +100,7 @@ class _ExpandableRecordingCardState
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: _isExpanded ? AppTheme.teal : AppTheme.mediumGray,
@@ -378,6 +380,39 @@ class _ExpandableRecordingCardState
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+
+                IconButton(
+                  icon: const Icon(Icons.content_cut_rounded),
+                  color: AppTheme.teal,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TrimScreen(recording: widget.recording),
+                      ),
+                    );
+                  },
+                  tooltip: 'Trim',
+                ),
+                IconButton(
+                  icon: const Icon(Icons.text_fields_rounded),
+                  color: widget.recording.transcript != null
+                      ? AppTheme.orange
+                      : AppTheme.mediumGray,
+                  onPressed: () async {
+                    // Transcribe the recording
+                    final transcript = await ref
+                        .read(transcriptionServiceProvider)
+                        .transcribeFile(widget.recording.filePath);
+
+                    if (transcript != null) {
+                      ref.read(recordingProvider.notifier).updateRecording(
+                        widget.recording.copyWith(transcript: transcript),
+                      );
+                    }
+                  },
+                  tooltip: 'Transcribe',
+                ),
                 IconButton(
                   icon: Icon(
                     widget.recording.isFavorite

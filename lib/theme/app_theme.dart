@@ -16,9 +16,9 @@ class AppTheme {
       surface: Colors.white,
       error: Colors.red,
     ),
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: Color(0xFFF3F9F5),
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFF3F9F5),
       elevation: 0,
       centerTitle: false,
       titleTextStyle: TextStyle(
@@ -64,12 +64,12 @@ class AppTheme {
       primary: teal,
       secondary: orange,
       surface: Color(0xFF1C1C1C),
-      background: Color(0xFF121212),
+      background: Color(0xFFCCCCCC),
       error: Colors.redAccent,
     ),
-    scaffoldBackgroundColor: const Color(0xFF121212),
+    scaffoldBackgroundColor: const Color(0xFF212222),
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFF1C1C1C),
+      backgroundColor: Color(0xFF212222),
       elevation: 0,
       centerTitle: false,
       titleTextStyle: TextStyle(

@@ -1,6 +1,7 @@
 // lib/services/transcription_service.dart
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class TranscriptionService {
   final _speechToText = SpeechToText();
@@ -33,28 +34,48 @@ class TranscriptionService {
     return status.isGranted;
   }
 
-  Future<String> transcribeFile(String audioFilePath) async {
+  // Transcribe audio file by playing it and listening with microphone
+  Future<String?> transcribeFile(String audioFilePath) async {
     try {
       if (!_isInitialized) {
         await initialize();
       }
 
-      // For on-device transcription, we'll use speech_to_text
-      // This works best with live audio, so for file transcription,
-      // we'll need to use the native platform channels
+      final permissionGranted = await requestMicrophonePermission();
+      if (!permissionGranted) {
+        throw Exception('Microphone permission denied');
+      }
 
-      // For now, returning placeholder - will be implemented via platform channels
-      return _transcribeFileNative(audioFilePath);
+      final audioPlayer = AudioPlayer();
+      String transcriptResult = '';
+
+      // Set up speech recognition
+      await _speechToText.listen(
+        onResult: (result) {
+          transcriptResult = result.recognizedWords;
+          print('Partial transcript: $transcriptResult');
+        },
+        listenMode: ListenMode.dictation,
+        pauseFor: const Duration(seconds: 30),
+        partialResults: true,
+        cancelOnError: true,
+      );
+
+      // Play the audio file
+      await audioPlayer.play(DeviceFileSource(audioFilePath));
+
+      // Wait for audio to finish
+      await audioPlayer.onPlayerComplete.first;
+
+      // Stop listening
+      await _speechToText.stop();
+      await audioPlayer.dispose();
+
+      return transcriptResult.isEmpty ? null : transcriptResult;
     } catch (e) {
       print('Error transcribing file: $e');
-      return '';
+      return null;
     }
-  }
-
-  Future<String> _transcribeFileNative(String audioFilePath) async {
-    // Placeholder - will be called via platform channel
-    // Implementation in Android/iOS native code
-    return '';
   }
 
   Future<void> startLiveTranscription(

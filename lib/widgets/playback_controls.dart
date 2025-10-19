@@ -17,7 +17,7 @@ class PlaybackControls extends ConsumerWidget {
       children: [
         // Progress slider
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: Column(
             children: [
               SliderTheme(
@@ -51,16 +51,16 @@ class PlaybackControls extends ConsumerWidget {
                   children: [
                     Text(
                       formattedPosition,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: AppTheme.darkText,
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
                       ),
                     ),
                     Text(
                       formattedDuration,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: AppTheme.darkText,
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
                       ),
                     ),
                   ],
@@ -69,7 +69,6 @@ class PlaybackControls extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(height: 8),
 
         // Control buttons
         Padding(
@@ -77,9 +76,11 @@ class PlaybackControls extends ConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              // 10s backward
               IconButton(
-                icon: const Icon(Icons.skip_previous_rounded),
+                icon: const Icon(Icons.replay_10_rounded),
                 color: AppTheme.teal,
+                iconSize: 28,
                 onPressed: () =>
                     ref.read(playbackProvider.notifier).skipBackward(),
               ),
@@ -102,9 +103,11 @@ class PlaybackControls extends ConsumerWidget {
                       ref.read(playbackProvider.notifier).togglePlayPause(),
                 ),
               ),
+              // 10s forward
               IconButton(
-                icon: const Icon(Icons.skip_next_rounded),
+                icon: const Icon(Icons.forward_10_rounded),
                 color: AppTheme.teal,
+                iconSize: 28,
                 onPressed: () =>
                     ref.read(playbackProvider.notifier).skipForward(),
               ),
