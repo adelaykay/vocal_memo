@@ -60,7 +60,7 @@ lib/
 
 1. Clone the repository:
 ```bash
-   git clone https://github.com/yourusername/vocal-memo.git
+   git clone https://github.com/adelaykay/vocal_memo.git
    cd vocal-memo
 ```
 
@@ -106,6 +106,16 @@ Add microphone permission to `ios/Runner/Info.plist`:
 - ✅ Search and filtering
 - ✅ Live recording visualization
 
+## Updates
+### v1.1
+
+- ✅ Dark Theme
+- ✅ Audio Trimming
+- ✅ Noise Suppression
+- ✅ Bitrate (Kbps) and Sample Rate (Hz) Selection
+- ✅ Multiple Audio Format (M4A, WAV, AAC, FLAC)
+- ✅ File Sharing
+
 ## Future Enhancements
 
 - Cloud sync (optional)
@@ -119,9 +129,16 @@ Add microphone permission to `ios/Runner/Info.plist`:
 
 Contributions welcome! Please fork the repo and submit a pull request.
 
-## License
+## License Summary
 
-MIT License – see LICENSE file for details.
+**Vocal Memo** is proprietary software developed and owned by **Empyreal Works**.  
+The source code and all accompanying assets are **not open-source** and may not be copied, modified, or redistributed without explicit permission.
+
+Personal and internal business use is allowed under the [Proprietary/Commercial License](./LICENSE.md).  
+Commercial redistribution or inclusion in other products requires a separate written agreement.
+
+📧 For licensing or redistribution inquiries: **hello@empyrealworks.com**
+
 
 ## Support
 
