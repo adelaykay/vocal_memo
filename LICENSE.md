@@ -1,6 +1,6 @@
 # VOCAL MEMO SOFTWARE LICENSE AGREEMENT
 
-**Copyright © 2025 Adeleke Olasope. All rights reserved.**  
+**Copyright © 2025 Empyreal Digital Works. All rights reserved.**  
 **Software:** Vocal Memo  
 **License Type:** Proprietary / Commercial License
 
@@ -24,7 +24,7 @@ You may **not**:
 ---
 
 ## 3. Ownership
-The Software and all related materials—including but not limited to source code, compiled binaries, UI/UX designs, audio files, visual assets, and documentation—are the exclusive property of **Adeleke Olasope**.
+The Software and all related materials—including but not limited to source code, compiled binaries, UI/UX designs, audio files, visual assets, and documentation—are the exclusive property of **Empyreal Digital Works**.
 
 All rights not expressly granted are reserved by the Licensor.
 
@@ -52,7 +52,7 @@ This includes, but is not limited to:
 
 For redistribution or enterprise licensing inquiries, please contact the Licensor.
 
-📧 **Email:** adeleke.olasope@gmail.com
+📧 **Email:** hello@empyrealworks.com
 
 ---
 
@@ -80,6 +80,6 @@ This Agreement shall be governed by and construed in accordance with the laws of
 ## 11. Contact
 For support, licensing, or commercial partnership inquiries:
 
-**Adeleke Olasope**  
-📧 **adeleke.olasope@gmail.com**  
+**Empyreal Digital Works**  
+📧 **hello@empyrealworks.com**  
 © 2025 All Rights Reserved.
