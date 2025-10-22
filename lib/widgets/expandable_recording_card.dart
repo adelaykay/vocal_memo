@@ -166,11 +166,7 @@ class _ExpandableRecordingCardState
                               onTap: _startEditingTitle,
                               child: Text(
                                 widget.recording.displayTitle,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppTheme.darkText,
-                                ),
+                                style: Theme.of(context).textTheme.titleMedium,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -352,6 +348,7 @@ class _ExpandableRecordingCardState
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   child: ChoiceChip(
+                    checkmarkColor: Colors.white,
                     label: Text(label),
                     selected: isSelected,
                     onSelected: (selected) {

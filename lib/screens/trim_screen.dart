@@ -28,6 +28,7 @@ class _TrimScreenState extends ConsumerState<TrimScreen> {
   final _editorService = AudioEditorService();
   bool _isSaving = false;
   bool _isDetectingSilence = false;
+  late PlaybackNotifier providerNotifier = ref.read(playbackProvider.notifier);
 
   // Keep track of segments to keep
   List<TrimSegment> _keepSegments = [];
@@ -48,13 +49,13 @@ class _TrimScreenState extends ConsumerState<TrimScreen> {
 
     // Load audio for playback
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(playbackProvider.notifier).load(widget.recording.filePath);
+      providerNotifier.load(widget.recording.filePath);
     });
   }
 
   @override
   void dispose() {
-    ref.read(playbackProvider.notifier).stop();
+    providerNotifier.stop();
     super.dispose();
   }
 

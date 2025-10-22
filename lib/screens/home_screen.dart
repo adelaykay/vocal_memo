@@ -160,6 +160,7 @@ class SearchBar extends StatelessWidget {
       onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
+        hintStyle:  TextStyle(color: AppTheme.darkText),
         prefixIcon: const Icon(Icons.search, color: AppTheme.teal),
         suffixIcon: const Icon(Icons.tune, color: AppTheme.teal),
         border: OutlineInputBorder(
